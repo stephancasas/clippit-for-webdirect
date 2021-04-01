@@ -1,0 +1,27 @@
+Let([
+saysValues = List(
+
+/*--- CLIPPIT MESSAGES ---*/
+"Did you miss me?"; 
+"It looks like you're trying to use FileMaker. Can I help?"
+
+);
+
+/*--- MESSAGE INTERVAL (MILLISECONDS) ---*/
+saysInterval = "24000";
+
+/*--- ANIMATE INTERVAL (MILLISECONDS) ---*/
+animateInterval = "56000"; // set to 0 for no animation
+
+/*--- CLIPPIT STYLESHEET & JS ---*/
+clippitStylesheet = "https://static.edgedynamics.net/clippit-for-webd/clippit.css";
+clippitScriptSrc = "https://static.edgedynamics.net/clippit-for-webd/clippit.min.js";
+jqueryScriptSrc = "https://code.jquery.com/jquery-2.2.4.min.js";
+
+/*--- DON'T TOUCH THIS ---*/
+saysEncoded = Base64EncodeRFC(3548; saysValues)
+];
+
+"data:text/html,<html><head><script>if(typeof parent.clippitLoaded === 'undefined'){ var clippitSays = atob(`" & saysEncoded & "`).split('\r'); var clippitIndex = -1; var webdHead = parent.document.querySelector('head'); var jqueryScript = parent.document.createElement('script'); jqueryScript.src = '" & jqueryScriptSrc & "'; jqueryScript.crossorigin = 'anonymous'; webdHead.appendChild(jqueryScript); var clippitStyle = parent.document.createElement('link'); clippitStyle.rel = 'stylesheet'; clippitStyle.type = 'text/css'; clippitStyle.href = '" & clippitStylesheet & "'; clippitStyle.media = 'all'; webdHead.appendChild(clippitStyle); var clippitScript = parent.document.createElement('script'); clippitScript.type = 'text/javascript'; clippitScript.src = '" & clippitScriptSrc & "'; clippitScript.onload = function () {parent.clippy.load('Clippy', function(agent){agent.show(); setInterval(function (agent) {clippitIndex++; var sayIndex = clippitIndex > clippitSays.length - 1 ? 0 : clippitIndex; clippitIndex = sayIndex; agent.speak(clippitSays[sayIndex]);}, " & saysInterval & ", agent); if(" & animateInterval & " !== 0)setInterval(function (agent) {agent.animate();}, " & animateInterval & ", agent);});}; webdHead.appendChild(clippitScript); parent.clippitLoaded = true;}</script></head></html>"
+
+)
